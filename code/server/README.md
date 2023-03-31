@@ -14,6 +14,9 @@
 
 `python server.py`
 
+后台持久化运行
+`nohup python server.py > output.log 2>&1 &`
+
 ## 访问
 
 `http://localhost:3000`
