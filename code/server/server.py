@@ -101,7 +101,7 @@ def hello_world():
     return render_template('index.html')
 
 
-@app.route('/search', methods=['POST'])
+@app.route('/pinefieldai/search', methods=['POST'])
 def search():
     data = request.get_json()
     search = data['search']
