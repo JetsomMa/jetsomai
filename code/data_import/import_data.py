@@ -20,7 +20,7 @@ def to_embeddings(prompt):
 
 
 if __name__ == '__main__':
-    client = QdrantClient("127.0.0.1", port=6333)
+    client = QdrantClient("118.195.236.91", port=6333)
     openai.api_key = os.getenv("OPENAI_API_KEY")
     # 创建collection
     client.recreate_collection(

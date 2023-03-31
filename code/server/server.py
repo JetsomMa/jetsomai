@@ -53,7 +53,7 @@ def query(text):
     payload中包含了title和text，title是疾病的标题，text是摘要
     最后使用openai的ChatCompletion API进行对话生成
     """
-    client = QdrantClient("127.0.0.1", port=6333)
+    client = QdrantClient("118.195.236.91", port=6333)
     openai.api_key = os.getenv("OPENAI_API_KEY")
     sentence_embeddings = openai.Embedding.create(
         model="text-embedding-ada-002",
