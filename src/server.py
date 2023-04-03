@@ -40,7 +40,7 @@ def query(text):
     resultArray = []
     resultKeyArray = []
     for result in search_result:
-        if result.score > 0.75:
+        if result.score > 0.785:
             # # 将 JSON 字符串转换为 Python 对象
             jsonObj = json.loads(result.payload["text"])
             for key in jsonObj:
