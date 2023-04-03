@@ -37,13 +37,13 @@ qdrant/qdrant
 
 
 ### 数据集入库[importData.py] 
-`python import_data.py`
+`python src/import_data.py`
 
 
 ### 启动查询服务[server.py] 
-`python server.py`
+`python src/server.py`
 **后台持久化运行**
-`nohup python server.py > output.log 2>&1 &`
+`nohup python src/server.py > output.log 2>&1 &`
 
 
 ##
