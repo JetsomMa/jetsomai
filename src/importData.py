@@ -29,7 +29,7 @@ if __name__ == '__main__':
     )
 
     count = 0
-    for root, dirs, files in os.walk("./source_data"):
+    for root, dirs, files in os.walk("../source_data"):
         for file in files:
             file_path = os.path.join(root, file)
             with open(file_path, 'r', encoding='utf-8') as f:
