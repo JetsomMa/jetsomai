@@ -28,7 +28,9 @@
                 <div class="card-body">
                     <h2 class="card-title">AI 回答</h2>
                     <p class="text-lg" id="answer"></p>
-                    <div class="card-actions justify-start" id="tags">
+                    <br>
+                    <h2 class="card-title">参照内容</h2>
+                    <div id="resultArray">
                     </div>
                 </div>
             </div>
@@ -48,6 +50,15 @@
     const card = document.querySelector('.card');
     const loading = document.querySelector('#loading');
     card.style.display = 'none';
+
+    search.addEventListener('keypress', function(event) {
+        if (search.value && event.key === 'Enter') {
+            event.preventDefault();
+            // 触发click事件
+            submitButton.click();
+        }
+    });
+
     submitButton.addEventListener('click', () => {
         loading.style.display = 'block';
         card.style.display = 'none';
@@ -60,10 +71,16 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
-        }).then(res => res.json()).then(data => {
+        }).then(res => res.json()).then(result => {
             loading.style.display = 'none';
             card.style.display = 'block';
-            document.querySelector('#answer').innerHTML = data.data.answer;
+            document.querySelector('#answer').innerHTML = result.data.answer;
+            let resultArray = result.data.resultArray;
+            console.error(resultArray);
+            document.querySelector('#resultArray').innerHTML = resultArray.map(resultItem => {
+                resultItem.payload.text = JSON.parse(resultItem.payload.text);
+                return `<div style="display: flex;"><div style="width: 100px;">${resultItem.score}</div><div>${JSON.stringify(resultItem.payload)}</div></div>`
+            }).join('');
         });
     });
 

@@ -37,26 +37,40 @@ def query(text):
     """
     因为提示词的长度有限，每个匹配的相关摘要我在这里只取了前300个字符，如果想要更多的相关摘要，可以把这里的300改为更大的值
     """
-    resultObject = {}
+    resultArray = []
+    resultKeyArray = []
     for result in search_result:
-        print(result)
-        # # 将 JSON 字符串转换为 Python 对象
-        jsonObj = json.loads(result.payload["text"])
-        for key in jsonObj:
-            if key in resultObject:
-                continue
-            else:
-                resultObject[key] = jsonObj[key]
+        if result.score > 0.75:
+            # # 将 JSON 字符串转换为 Python 对象
+            jsonObj = json.loads(result.payload["text"])
+            for key in jsonObj:
+                if key in resultKeyArray:
+                    continue
+                else:
+                    resultKeyArray.append(key)
+                    resultArray.append({ 'score': result.score, 'payload': result.payload })
+                
 
-    # 将合并后的对象转换为 JSON 字符串
-    resultString = json.dumps(resultObject)
+    resultString = "描述信息不充分，请修改明确描述问题。"
+    if(len(resultArray) >= 3):
+        resultString = {}
+        for result in resultArray:
+            print(result)
+            # # 将 JSON 字符串转换为 Python 对象
+            jsonObj = json.loads(result["payload"]["text"])
+            for key in jsonObj:
+                resultString[key] = jsonObj[key]
+
+        # 将合并后的对象转换为 JSON 字符串
+        resultString = json.dumps(resultString)
 
     print("-----resultString-----")
     print(resultString)
 
     print("----- query end -----")
     return {
-        "answer": resultString
+        "answer": resultString,
+        "resultArray": resultArray
     }
 
 @app.route('/')
@@ -75,7 +89,7 @@ def search():
         "code": 200,
         "data": {
             "search": search,
-            "answer": res["answer"]
+            **res
         },
     }
 
