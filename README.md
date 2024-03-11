@@ -1,4 +1,4 @@
-# pinefield.ai
+# jetsom.ai
 基于向量数据库与GPT3.5的自然语言转换指令集的方案示例
 
 ## 流程
